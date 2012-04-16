@@ -1,0 +1,40 @@
+(define (square x) (* x x))
+
+(define (^ base exp)
+  (cond 
+   ((= exp 1) 
+ ;   (begin     (display exp)(newline))
+    base)
+   ((= (modulo exp 2) 0) (square (^ base (floor (/ exp 2)))))
+   (else (* base (square (^ base (/ (- exp 1) 2))))
+         )))
+
+(define (classic base exp)
+  (cond
+   ( (= exp 1)
+ ;    (begin     (display exp)(newline))
+     base)
+   (else (* base (classic base (- exp 1))))))
+
+(define (num->list x)
+  (cond
+    ((= x 0) '())
+    (else (append (num->list (floor (/ x 10))) (list (modulo x 10))))))
+
+(define l '(1 2 3 4 5 6 7 8 9))
+(define (range x y)
+  (cond
+    ((= x (+ y 1)) '())
+    (else (cons x (range (+ x 1) y)))))
+(define (table lst)
+  (map (lambda (i) 
+         (map (lambda (j) (^ i j) ) lst)
+         ) lst))
+(define (greatest_num lst arg)
+  (cond 
+    ((null? lst) arg)
+    ((> (car lst) arg) (greatest_num (cdr lst) (car lst)))
+    (else (greatest_num (cdr lst) arg))))
+
+(display "The answer is... ")
+(greatest_num (map (lambda (i) (apply + (num->list i))) (apply append (table (range 1 99)))) 0)

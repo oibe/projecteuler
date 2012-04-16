@@ -1,0 +1,2 @@
+problem 45 has strange if condition, I think a, b, c for quadratic 
+formula should be passed integers, and not fractions.

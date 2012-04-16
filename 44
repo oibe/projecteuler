@@ -1,0 +1,39 @@
+;Generates pentagonal numbers up to a certain index of pentagonal number
+(define (penta-helper n count)
+  (cond
+    ((= count (+ n 1)) '())
+    (else (cons (/ (* count(- (* 3 count) 1)) 2) (penta-helper n (+ count 1))))))
+(define (penta n) (penta-helper n 1))
+
+;make sublists of every pair of pentagonal numbers
+(define (func lst)
+  (map (lambda (i) 
+         (map (lambda (j)
+                (list i j)) lst))
+       lst))
+
+;combine lists so they are easier to work with
+(define temp (apply append (func (penta 100))))
+
+;difference between all pairs of pentagonal numbers
+(define diff (map (lambda (i) (abs (- (car i) (cadr i)))) temp))
+
+;sum between all pairs of pentagonal numbers
+(define sum (map (lambda (i) (abs (+ (car i) (cadr i)))) temp))
+
+;max function
+(define (max x y)
+  (cond
+    ((> x y) x)
+    (else y)))
+
+;returns true if a number is pentagonal false otherwise
+(define (penta? n)
+   (integer? (/ (max (+ 1 (sqrt (+ 1 (* -4(*  3 (* -2 n))))))
+   (- 1 (sqrt (+ 1 (* -4(*  3 (* -2 n))))))) 6))) 
+(define (filter pred lst)
+  (cond
+    ((null? lst) '())
+    ((pred (car lst)) (cons (car lst) (filter pred (cdr lst))))
+    (else (filter pred (cdr lst)))))
+; (filter penta? n)
